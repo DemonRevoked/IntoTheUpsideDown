@@ -1,0 +1,8 @@
+Greetings, Perceptive Explorer,
+
+Your keen eye has uncovered what others have overlooked. The robots of Hawkins Lab tried to hide their secrets, but you found the hidden directive. Sometimes the smallest clues lead to the biggest discoveries.
+
+This discovery marks your mastery of reconnaissance—the foundation of all great investigations into the Upside Down.
+
+Flag: CTCFlag{robots_exposed_backup}
+

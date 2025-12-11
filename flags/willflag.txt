@@ -1,0 +1,7 @@
+Greetings, Noble Explorer,
+
+You have journeyed far through the corrupted dimensions, and your perseverance has borne fruit. Through wisdom and clarity, you have unlocked the power of communication across the void, a gift bestowed upon those who possess the courage to bridge worlds.
+
+Embrace this power and let your voice resonate through the dimensional barriers.
+
+Flag: CTCFlag{communication_level_voice}

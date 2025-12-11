@@ -1,0 +1,68 @@
+version: '3.3'  # Use a compatible version for your Docker Compose
+
+services:
+  web_page:
+    build: ./web_page
+    ports:
+      - "80:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=example
+    volumes:
+      - ./web_page/src:/var/www/html
+  ftpd:
+    build: ./ftp
+    ports:
+      - "20-21:20-21"
+      - "65500-65515:65500-65515"
+    volumes:
+      - "./ftp/logs:/var/ftp:ro"
+    environment:
+      - "FTPD_BANNER=Welcome to the Upside Down FTP. The gate is locked. Password Hint: gate_access"
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=ctf
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+  vm1:
+    build: ./ssh_machine/vm1
+    ports:
+      - "2223:22"
+    volumes:
+      - ssh:/etc/ssh
+      - ./flags/willflag.txt:/home/will/flag.txt
+      - ./flags/joyceflag.txt:/home/joyce/flag.txt
+    command: bash -c "service ssh start | tail -f /dev/null"
+
+  vm2:
+    build: ./ssh_machine/vm2
+    ports:
+      - "2222:22"
+    volumes:
+      - ./ssh_machine/vm2/sshd_config:/etc/ssh/sshd_config
+      - ./flags/dustinflag.txt:/home/dustin/flag.txt
+      - ./flags/steveflag.txt:/home/steve/flag.txt
+    command: bash -c "service ssh start | tail -f /dev/null"
+
+  vm3:
+    build: ./ssh_machine/vm3
+    ports:
+      - "2224:22"
+    volumes:
+      - ssh:/etc/ssh
+      - ./flags/maxflag.txt:/home/max/flag.txt
+      - ./flags/vecnaflag.txt:/home/vecna/flag.txt
+    command: bash -c "service ssh start && cron && tail -f /dev/null"
+
+volumes:
+  db_data:
+  ssh:  # Create a named volume for SSH data
