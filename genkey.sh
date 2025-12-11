@@ -32,5 +32,5 @@ echo "KEY10: $key10" > ssh_machine/vm3/key10.txt
 
 # rm -r setupctc.sh fetchipctc.sh
 # Print the key to the console
-docker-compose down
-docker-compose up --build -d
+docker compose down
+docker compose up --build -d
