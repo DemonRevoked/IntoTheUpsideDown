@@ -22,7 +22,7 @@ services:
       - "FTPD_BANNER=Welcome to the Upside Down FTP. The gate is locked. Password Hint: gate_access"
 
   db:
-    image: mysql:5.7
+    image: registry.zerohack.in:5000/mysql:5.7
     ports:
       - "3306:3306"
     environment:

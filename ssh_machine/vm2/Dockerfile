@@ -1,5 +1,5 @@
 # Dockerfile_ssh
-FROM demonrevoked/vuln:nmap-3.81
+FROM registry.zerohack.in:5000/vuln:nmap-3.81
 
 # Update and install necessary packages
 RUN apt update && apt install openssh-server sudo -y

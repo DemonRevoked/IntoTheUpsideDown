@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM registry.zerohack.in:5000/php:7.4-apache
 
 # Install mysqli
 RUN docker-php-ext-install mysqli
