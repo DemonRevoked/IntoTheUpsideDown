@@ -1,5 +1,5 @@
 # Dockerfile_ssh
-FROM registry.zerohack.in:5000/ubuntu:latest
+FROM ubuntu:latest
 
 # Update and install necessary packages
 RUN apt update && apt install openssh-server binutils sudo -y

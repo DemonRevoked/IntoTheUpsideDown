@@ -1,4 +1,4 @@
-FROM registry.zerohack.in:5000/base-image
+FROM metabrainz/base-image
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vsftpd \
